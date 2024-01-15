@@ -12,7 +12,6 @@ function convertPokeApiDetailToPokemon(pokeDetail) {
     return pokemon
 }
 
-
 // Função para obter detalhes de um Pokémon específico
 pokeApi.getPokemonDetail = (pokemon) => {
     return fetch(pokemon.url)
