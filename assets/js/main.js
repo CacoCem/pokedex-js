@@ -1,14 +1,17 @@
-// Fazer a requisição da API PokeAPI
+// Referenciando elementos HTML
 const pokemonList = document.getElementById('pokemonList')
 const loadMoreButton = document.getElementById('loadMoreButton');
+
+//Definindo constantes e variáveis de paginação
 const maxRecords = 151;
 const limit = 9
 let offset = 0
 
-
+// Função para carregar itens Pokémon
 function loadPokemonItens(offset, limit) {
-    // Iniciar a requisição usando fetch (promise)
+    // Requisição para a API
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
+        // Criando o elemento em HTML para cada Pokémon
         const newHtml = pokemons.map((pokemon) => `
             <li class="pokemon ${pokemon.type}">
                 <span class="number">#${pokemon.number.toString().padStart(3, '0')}</span>
@@ -21,21 +24,29 @@ function loadPokemonItens(offset, limit) {
                 </div>
             </li> 
         `).join('')
+
+        // Adição do elemento gerado
         pokemonList.innerHTML += newHtml
     })
 }
 
+// Carregamento dos primeiros Pokémon
 loadPokemonItens(offset, limit)
 
+// Ouvinte do botão "Carregar Mais"
 loadMoreButton.addEventListener('click', () => {
-    offset += limit
+    offset += limit // Incremento da posição da lista
     const qtdRecordNextPage = offset + limit
+
+    // Verificação se passou do número máximo de Pokémon
     if(qtdRecordNextPage >= maxRecords) {
         const newLimit = maxRecords - offset
         loadPokemonItens(offset, newLimit)
-        
+
+        // Remove o botão "Carregar Mais" quando atinge o limite máximo
         loadMoreButton.parentElement.removeChild(loadMoreButton)
     } else {
+        // Carrega os Pokémon normalmente, até chegar no número máximo de registros
         loadPokemonItens(offset, limit)
     }
 })
