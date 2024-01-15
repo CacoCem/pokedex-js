@@ -1,5 +1,6 @@
 const pokeApi = {}
 
+// Função para converter detalhes da PokeAPI em um objeto Pokemon
 function convertPokeApiDetailToPokemon(pokeDetail) {
     const pokemon = new Pokemon()
     pokemon.number = pokeDetail.id

@@ -1,4 +1,3 @@
-
 .normal {
     background-color: #A8A77A
 }
@@ -70,8 +69,6 @@
 .fairy {
     background-color: #D685AD
 }
-
-
 
 .pokemons {
     display: grid;
@@ -169,5 +166,3 @@
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 }
-
-
