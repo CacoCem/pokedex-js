@@ -149,6 +149,10 @@
     border-radius: 1rem;
 }
 
+.pokemon-link {
+    text-decoration: none;
+}
+
 @media screen and (min-width: 380px){
     .pokemons{
         grid-template-columns: 1fr 1fr;
