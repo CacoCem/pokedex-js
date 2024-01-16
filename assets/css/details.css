@@ -4,9 +4,19 @@
 
 }
 
+.content {
+    padding-bottom: 5%;
+}
+
+.pokemon-details {
+    display: flex;
+    justify-content: center;
+}
 .pokemon-detail {
     display: flex;
     flex-direction: column;
+    width: 440px;
+    height: 750px;
     margin: 0.5rem;
     padding: 1rem 1rem;
     border-radius: 1rem;
@@ -22,6 +32,7 @@
     text-transform: capitalize;
     color: #fff;
     margin-bottom: 0.25rem;
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
 }
 
 .pokemon-detail .detail .types {
@@ -44,11 +55,13 @@
     filter: brightness(1.16);
     text-align: center;
     display: inline;
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 1);
 }
 
 .img-detail {
     display: flex;
     justify-content: center;
+    position: relative;
     max-width: 100%;
     height: 20rem;
 }
@@ -56,17 +69,82 @@
 .stats-pokemon {
     display: flex;
     flex-direction: column;
-    margin: 0.5rem;
+    margin-top: -3rem;
     padding: 1rem 1rem;
     border-radius: 3rem;
-    background-color: #FFF;    
+    background-color: #FFF;
+    box-shadow: -2px 2px 0 rgba(0, 0, 0, 0.2);;    
 }
 
-.stats-pokemon h2 {
+.stats-pokemon .sobre-pokemon {
     display: flex;
-    justify-content: center;
+    margin-top: 1.5rem;
+    margin-left: 2.5rem;
+    margin-bottom: -0.2rem;
+    font-size: 1.5rem;
 }
 
 .stats-pokemon ol {
-    list-style-type: none
+    list-style-type: none;
+}
+
+.stats-pokemon li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.barra {
+    margin-left: 5%;
+    width: 150px;
+    height: 5px;
+    border-radius: 10px;
+    background-color: #dae0ea;
+}
+
+.barra div {
+    height: 100%;
+    border-radius: 10px;
+}
+
+.stats-progresso {
+    display: flex;
+    flex-direction: row; /* Alteração para coluna para melhor alinhamento */
+    align-items: center;
+}
+
+.barra-progresso.red {
+    background-color: #ce1f30;
+}
+
+.barra-progresso.yellow {
+    background-color: #ffc61d;
+}
+
+.barra-progresso.green {
+    background-color: #228b22;
+}
+
+.buttons {
+    position: relative;
+    margin-top: -4rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.button {
+    width: 20%;
+    padding: 1%;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    background-color: #6c7adc;
+    box-shadow: -1px 1px 0 #222, -1px 2px 0 #000;
+}
+
+.button:active {
+    background-color: #525da9;
+    box-shadow: inset -1px 1px 0 #222;
+    font-size: 0.96rem;
 }
