@@ -1,17 +1,54 @@
 // details.js
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const pokemonNumber = urlParams.get('pokemon');
+    let currentPokemonNumber = parseInt(urlParams.get('pokemon')) || 1;
 
-    if (pokemonNumber) {
+    if (currentPokemonNumber) {
         // Obtém os detalhes do Pokémon com base no número e exibe na página
-        pokeApi.getPokemonDetail({ url: `https://pokeapi.co/api/v2/pokemon/${pokemonNumber}/`})
+        pokeApi.getPokemonDetail({ url: `https://pokeapi.co/api/v2/pokemon/${currentPokemonNumber}/`})
             .then((pokemon) => displayPokemonDetails(pokemon));
     } else {
         // Lógica para tratar quando não há número de Pokémon fornecido na URL
         console.error("Número de Pokémon não especificado na URL.");
     }
+
+    const btnAnterior = document.querySelector('.btn-prev');
+    const btnProximo = document.querySelector('.btn-next');
+
+    btnAnterior.addEventListener('click', () => {
+        // Navega para o Pokémon anterior
+        currentPokemonNumber = Math.max(1, currentPokemonNumber - 1);
+
+        // Atualiza a URL sem recarregar a página
+        history.pushState({}, '', `details.html?pokemon=${currentPokemonNumber}`);
+
+        // Obtém os detalhes do Pokémon anterior e exibe na página
+        pokeApi.getPokemonDetail({ url: `https://pokeapi.co/api/v2/pokemon/${currentPokemonNumber}/`})
+            .then((pokemon) => displayPokemonDetails(pokemon));
+
+        console.log(currentPokemonNumber);
+    });
+
+    btnProximo.addEventListener('click', () => {
+        // Defina o número máximo do Pokémon disponível (por exemplo, 5 para o seu caso)
+        const maxPokemonNumber = 5;
+
+        // Navega para o próximo Pokémon
+        currentPokemonNumber = Math.min(maxPokemonNumber, currentPokemonNumber + 1);
+
+        // Atualiza a URL sem recarregar a página
+        history.pushState({}, '', `details.html?pokemon=${currentPokemonNumber}`);
+
+        // Obtém os detalhes do próximo Pokémon e exibe na página
+        pokeApi.getPokemonDetail({ url: `https://pokeapi.co/api/v2/pokemon/${currentPokemonNumber}/`})
+            .then((pokemon) => displayPokemonDetails(pokemon));
+        console.log(currentPokemonNumber);
+
+    });
+   
 });
+
+
 
 const getColorClass = (statValue) => {
     if (statValue < 50) {
