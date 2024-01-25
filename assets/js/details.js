@@ -1,4 +1,8 @@
 // details.js
+function voltar() {
+    window.history.back();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     let currentPokemonNumber = parseInt(urlParams.get('pokemon')) || 1;
@@ -31,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnProximo.addEventListener('click', () => {
         // Defina o número máximo do Pokémon disponível (por exemplo, 5 para o seu caso)
-        const maxPokemonNumber = 5;
+        const maxPokemonNumber = 500;
 
         // Navega para o próximo Pokémon
         currentPokemonNumber = Math.min(maxPokemonNumber, currentPokemonNumber + 1);
@@ -47,8 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
    
 });
-
-
 
 const getColorClass = (statValue) => {
     if (statValue < 50) {
