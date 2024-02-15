@@ -32,11 +32,3 @@ git clone https://github.com/seuusuario/pokedex.git
 ## Créditos
 
 - [PokeAPI](https://pokeapi.co/): API utilizada para obter dados dos Pokémon.
-
-## Contribuição
-
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
-
-## Licença
-
-Este projeto está licenciado sob a Licença MIT. Consulte o arquivo [LICENSE](LICENSE) para obter detalhes.
