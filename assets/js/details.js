@@ -25,11 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Obtém os detalhes do Pokémon anterior e exibe na página
         pokeApi.getPokemonDetail({ url: `https://pokeapi.co/api/v2/pokemon/${currentPokemonNumber}/`})
             .then((pokemon) => {
-                // Atualiza a visibilidade do coração com base no estado favorito do Pokémon
-                const isFavorited = favorites.includes(currentPokemonNumber);
-                heartEmpty.classList.toggle('hidden', isFavorited);
-                heartFill.classList.toggle('hidden', !isFavorited);
-
                 displayPokemonDetails(pokemon);
             });
     });
@@ -47,103 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Obtém os detalhes do próximo Pokémon e exibe na página
         pokeApi.getPokemonDetail({ url: `https://pokeapi.co/api/v2/pokemon/${currentPokemonNumber}/`})
             .then((pokemon) => {
-                // Atualiza a visibilidade do coração com base no estado favorito do Pokémon
-                const isFavorited = favorites.includes(currentPokemonNumber);
-                heartEmpty.classList.toggle('hidden', isFavorited);
-                heartFill.classList.toggle('hidden', !isFavorited);
-
                 displayPokemonDetails(pokemon);
             });
     });
-
-    const favoriteButton = document.getElementById('favoriteButton');
-    const heartEmpty = document.getElementById('heartEmpty');
-    const heartFill = document.getElementById('heartFill');
-
-    // Obtém a lista de Pokémon favoritos do armazenamento local
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-
-    // Verifica se o Pokémon atual é favorito
-    const isFavorited = favorites.includes(currentPokemonNumber);
-
-    // Define a visibilidade do coração com base no estado favorito do Pokémon
-    heartEmpty.classList.toggle('hidden', isFavorited);
-    heartFill.classList.toggle('hidden', !isFavorited);
-
-
-
-    favoriteButton.addEventListener('click', () => toggleFavoriteStatus(currentPokemonNumber, heartEmpty, heartFill));
 });
-
-function toggleFavoriteStatus(pokemonNumber, heartEmpty, heartFill) {
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    
-    const index = favorites.indexOf(pokemonNumber);
-    
-    if (index === -1) {
-        favorites.push(pokemonNumber);
-        showNotification('Adicionado aos Favoritos!', 'green');
-        heartEmpty.classList.add('hidden');
-        heartFill.classList.remove('hidden');
-    } else {
-        favorites.splice(index, 1);
-        showNotification('Removido dos Favoritos!', 'red');
-        heartEmpty.classList.remove('hidden');
-        heartFill.classList.add('hidden');
-    }
-
-    // Salva a lista de favoritos de volta no armazenamento local
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-}
-
-// function toggleFavoriteStatus(pokemonNumber) {
-//     const heartEmpty = document.getElementById('heartEmpty');
-//     const heartFill = document.getElementById('heartFill');
-//     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    
-//     const index = favorites.indexOf(pokemonNumber);
-    
-//     if (index === -1) {
-//         favorites.push(pokemonNumber);
-//         showNotification('Adicionado aos Favoritos!', 'green');
-//         heartEmpty.classList.add('hidden');
-//         heartFill.classList.remove('hidden');
-//     } else {
-//         favorites.splice(index, 1);
-//         showNotification('Removido dos Favoritos!', 'red');
-//         heartEmpty.classList.remove('hidden');
-//         heartFill.classList.add('hidden');
-//     }
-
-//     // Salva a lista de favoritos de volta no armazenamento local
-//     localStorage.setItem('favorites', JSON.stringify(favorites));
-// }
-
-
-function showNotification(message, color) {
-    removeNotifications();
-    const notification = document.createElement('div');
-    notification.classList.add('notification');
-    notification.style.backgroundColor = color;
-    notification.textContent = message;
-    document.body.appendChild(notification);
-
-    // Remove a notificação após alguns segundos (ajuste conforme necessário)
-    setTimeout(() => {
-        notification.remove();
-    }, 5050505005);
-}
-
-// Adição de uma função para remover notificações existentes
-function removeNotifications() {
-    const existingNotifications = document.querySelectorAll('.notification');
-    existingNotifications.forEach(notification => {
-        notification.remove();
-    });
-}
-
-
-
 
 const getColorClass = (statValue) => {
     if (statValue < 50) {
@@ -157,9 +59,7 @@ const getColorClass = (statValue) => {
 
 function displayPokemonDetails(pokemon) {
     // Seletor para o elemento onde os detalhes do Pokémon serão exibidos
-    const pokemonDetailsContainer = document.getElementById('pokemonDetails');
-
-    
+    const pokemonDetailsContainer = document.getElementById('pokemonDetails'); 
 
     // Cria elementos HTML para exibir os detalhes do Pokémon
     const pokemonDetailsHtml = `

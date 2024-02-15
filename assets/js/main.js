@@ -1,57 +1,93 @@
 // Referenciando elementos HTML
-const pokemonList = document.getElementById('pokemonList')
-const loadMoreButton = document.getElementById('loadMoreButton');
+const pokemonList = document.getElementById('pokemonList');
+const searchInput = document.getElementById('searchInput');
+const searchButton = document.getElementById('searchButton');
 
-//Definindo constantes e variáveis de paginação
-const maxRecords = 151;
-const limit = 9
-let offset = 0
+// Definindo constantes e variáveis de paginação
+const limit = 151; // Define o limite para carregar apenas 9 Pokémon
+let offset = 0;
+let pokemons = []; // Mantenha uma variável para armazenar todos os Pokémon
 
-// Função para carregar itens Pokémon
-function loadPokemonItens(offset, limit) {
-    // Requisição para a API
-    pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
-        // Criando o elemento em HTML para cada Pokémon
-        const newHtml = pokemons.map((pokemon) => `
-            <a href="details.html?pokemon=${pokemon.number}" class="pokemon-link">
-                <li class="pokemon ${pokemon.type}">
-                    <span class="number">#${pokemon.number.toString().padStart(3, '0')}</span>
-                    <span class="name">${pokemon.name}</span>
-                    <div class="detail">
-                        <ol class="types">
-                            ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
-                        </ol>
-                        <img src=${pokemon.photo} alt="${pokemon.name}">
-                    </div>
-                </li>
-            </a>
-        `).join('')
-
-        // Adição do elemento gerado
-        pokemonList.innerHTML += newHtml
-    })
+// Função para carregar os primeiros 9 Pokémon ao carregar a página
+function loadInitialPokemon() {
+    pokeApi.getPokemons(offset, limit).then((pokemonData) => {
+        pokemons = pokemonData; // Armazena os Pokémon na variável global
+        loadPokemonItems(); // Carrega os Pokémon na lista
+    });
 }
 
-// Carregamento dos primeiros Pokémon
-loadPokemonItens(offset, limit)
+// Carregamento dos primeiros 9 Pokémon ao carregar a página
+loadInitialPokemon();
 
-// Ouvinte do botão "Carregar Mais"
-loadMoreButton.addEventListener('click', () => {
-    offset += limit // Incremento da posição da lista
-    const qtdRecordNextPage = offset + limit
+// Função para carregar itens Pokémon
+function loadPokemonItems() {
+    // Limpa a lista de Pokémon atual
+    pokemonList.innerHTML = '';
 
-    // Verificação se passou do número máximo de Pokémon
-    if(qtdRecordNextPage >= maxRecords) {
-        const newLimit = maxRecords - offset
-        loadPokemonItens(offset, newLimit)
+    // Carrega todos os itens da lista
+    const newHtml = pokemons.map((pokemon) => `
+        <a href="details.html?pokemon=${pokemon.number}" class="pokemon-link">
+            <li class="pokemon ${pokemon.type}">
+                <span class="number">#${pokemon.number.toString().padStart(3, '0')}</span>
+                <span class="name">${pokemon.name}</span>
+                <div class="detail">
+                    <ol class="types">
+                        ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
+                    </ol>
+                    <img src=${pokemon.photo} alt="${pokemon.name}">
+                </div>
+            </li>
+        </a>
+    `).join('');
 
-        // Remove o botão "Carregar Mais" quando atinge o limite máximo
-        loadMoreButton.parentElement.removeChild(loadMoreButton)
-    } else {
-        // Carrega os Pokémon normalmente, até chegar no número máximo de registros
-        loadPokemonItens(offset, limit)
+    // Adiciona os itens à lista de Pokémon
+    pokemonList.innerHTML = newHtml;
+}
+
+// Função para filtrar os Pokémon de acordo com o texto de busca
+function filterPokemonByName(searchText) {
+    // Verifica se o texto de busca está vazio
+    if (!searchText.trim()) {
+        loadInitialPokemon(); // Se estiver vazio, recarrega os primeiros 9 Pokémon
+        return;
     }
-})
+
+    // Filtra os Pokémon cujo nome inclui o texto de busca
+    const filteredPokemons = pokemons.filter((pokemon) => {
+        return pokemon.name.toLowerCase().includes(searchText.toLowerCase());
+    });
+
+    // Carrega os Pokémon filtrados na lista
+    const newHtml = filteredPokemons.map((pokemon) => `
+        <a href="details.html?pokemon=${pokemon.number}" class="pokemon-link">
+            <li class="pokemon ${pokemon.type}">
+                <span class="number">#${pokemon.number.toString().padStart(3, '0')}</span>
+                <span class="name">${pokemon.name}</span>
+                <div class="detail">
+                    <ol class="types">
+                        ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
+                    </ol>
+                    <img src=${pokemon.photo} alt="${pokemon.name}">
+                </div>
+            </li>
+        </a>
+    `).join('');
+
+    // Adiciona os Pokémon filtrados à lista de Pokémon
+    pokemonList.innerHTML = newHtml;
+}
+
+// Ouvinte de evento para o input de busca
+searchInput.addEventListener('input', () => {
+    const searchText = searchInput.value.trim(); // Obtém o texto de busca
+    filterPokemonByName(searchText); // Filtra os Pokémon de acordo com o texto de busca
+});
+
+// Ouvinte de evento para o botão de busca
+searchButton.addEventListener('click', () => {
+    const searchText = searchInput.value.trim(); // Obtém o texto de busca
+    filterPokemonByName(searchText); // Filtra os Pokémon de acordo com o texto de busca
+});
 
 // Ouvinte do clique nos Pokémon
 pokemonList.addEventListener('click', (event) => {

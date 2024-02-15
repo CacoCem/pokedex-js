@@ -166,41 +166,7 @@
     flex-direction: row;
     justify-content: center;
     gap: 30px;
-    margin-top: 36em;
-}
-
-.button-like {
-    display: flex;
-    justify-content: center;
-    margin-top: -43em;
-    margin-right: -23.5em;
-}
-
-.notification {
-    position: fixed;
-    top: -10px;
-    margin: 20px;
-    padding: 10px;
-    border-radius: 10px;
-    color: white;
-    font-weight: bold;
-    animation: slide-bottom .3s ease-out both;
-}
-
-.favorite-button{
-    background: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-}
-
-.favorite-button:hover{
-    cursor: pointer;
-}
-
-
-.hidden {
-    display: none !important;
+    margin-top: -4em;
 }
 
 @keyframes slide-bottom{
