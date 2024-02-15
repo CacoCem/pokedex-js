@@ -4,11 +4,10 @@ const searchInput = document.getElementById('searchInput');
 const searchButton = document.getElementById('searchButton');
 
 // Definindo constantes e variáveis de paginação
-const limit = 151; // Define o limite para carregar apenas 9 Pokémon
+const limit = 151;
 let offset = 0;
 let pokemons = []; // Mantenha uma variável para armazenar todos os Pokémon
 
-// Função para carregar os primeiros 9 Pokémon ao carregar a página
 function loadInitialPokemon() {
     pokeApi.getPokemons(offset, limit).then((pokemonData) => {
         pokemons = pokemonData; // Armazena os Pokémon na variável global
@@ -16,7 +15,6 @@ function loadInitialPokemon() {
     });
 }
 
-// Carregamento dos primeiros 9 Pokémon ao carregar a página
 loadInitialPokemon();
 
 // Função para carregar itens Pokémon
